@@ -14,8 +14,6 @@ module.exports.handler = async (event) => {
 
   const data = JSON.parse(event.body) 
 
-  console.log('data::', data)
-
   const cloudformationResult = await cloudformationUtilities(data, cloudformationClient);
 
   if(!(cloudformationResult == 'FAILED')) {
