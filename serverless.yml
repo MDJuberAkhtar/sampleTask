@@ -1,0 +1,30 @@
+service: task-mirafra
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  profile: serverlessDeleteopensass
+  stage: dev
+  region: us-east-1
+  environment:
+        NODE_PATH: "./:/opt/node_modules"
+  iamRoleStatements:
+        - Effect: Allow
+          Action:
+              - cloudformation:*
+              - dynamodb:*
+              - sns:*
+          Resource: '*'
+
+functions:
+  hello:
+    handler: handler.handler
+    layers:
+      - arn:aws:lambda:us-east-1:168131596408:layer:create_1:1
+    events:
+          - http:
+              path: updatestack
+              method: POST
+              cors: true
